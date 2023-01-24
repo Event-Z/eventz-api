@@ -5,7 +5,7 @@ spring:
       password: "@p2A&8iQlM71Cs7P0dIHFQJw8sLyTcQLGvaQgWVpw*RyuoY!@T"
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/account_service_db
+    url: jdbc:mysql://localhost:3306/valenotadb
     username: root
     password:
   jpa:
