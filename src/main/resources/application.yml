@@ -1,0 +1,14 @@
+spring:
+  security:
+    basic-auth:
+      user: app-test-1
+      password: "@p2A&8iQlM71Cs7P0dIHFQJw8sLyTcQLGvaQgWVpw*RyuoY!@T"
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/account_service_db
+    username: root
+    password:
+  jpa:
+    hibernate.ddl-auto: none
+    generate-ddl: false
+    show-sql: true
