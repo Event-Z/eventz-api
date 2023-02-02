@@ -1,7 +1,7 @@
 spring:
   security:
-    basic-auth:
-      user: app-test-1
+    user:
+      name: app-test-1
       password: "@p2A&8iQlM71Cs7P0dIHFQJw8sLyTcQLGvaQgWVpw*RyuoY!@T"
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
