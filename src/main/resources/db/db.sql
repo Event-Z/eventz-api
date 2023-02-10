@@ -1,9 +1,10 @@
 create database valenotadb;
 
-create table address(
+create table address (
 	id varchar(32) primary key,
     street varchar(255) not null,
     city varchar(255) not null,
+    district varchar(255) not null,
     number int not null,
     cep varchar(10) not null
 );
