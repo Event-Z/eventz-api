@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service
 class PersonServiceImpl(val personRepository: IPersonRepository) : IPersonService {
     override fun create(personForm: PersonForm): PersonDTO {
         val mapper = PersonMapper()
-        return mapper.toPersonDTO(personRepository.save(mapper.toPerson(personForm)))
+        val person = mapper.toPerson(personForm)
+        return mapper.toPersonDTO(personRepository.save(person))
     }
 }
