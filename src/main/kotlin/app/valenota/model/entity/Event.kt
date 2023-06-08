@@ -1,5 +1,7 @@
 package app.valenota.model.entity
 
+import app.valenota.model.form.AddressForm
+import app.valenota.model.form.CompanyForm
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.Builder
@@ -33,14 +35,19 @@ class Event {
     @JoinColumn(name = "address_id")
     lateinit var address: Address
 
-    constructor(date_event: LocalDateTime, price: Double, name: String, address: Address) {
+    @OneToOne(cascade = [CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST])
+    @JoinColumn(name = "company_id")
+    lateinit var company: Company
+
+    constructor(date_event: LocalDateTime, price: Double, name: String, address: Address, company: Company) {
 
         this.date_event = date_event
         this.price = price
         this.name = name
         this.address = address
+        this.company = company
     }
 
     constructor()
-
+    constructor(date_event: LocalDateTime, price: Double, name: String, address: AddressForm, company: CompanyForm)
 }

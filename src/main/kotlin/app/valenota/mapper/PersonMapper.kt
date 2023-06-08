@@ -6,6 +6,7 @@ import app.valenota.model.entity.Person
 import app.valenota.model.form.PersonForm
 
 class PersonMapper {
+
     fun toPerson(personForm: PersonForm) = Person(
         name = personForm.name,
         cpf = personForm.cpf,
