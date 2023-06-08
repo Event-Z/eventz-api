@@ -1,23 +1,27 @@
 package app.valenota.model.entity
 
-import jakarta.persistence.Id
-import jakarta.persistence.Entity
-import jakarta.persistence.Column
-import jakarta.persistence.OneToOne
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.CascadeType
+import jakarta.persistence.*
+import lombok.AllArgsConstructor
+import lombok.Builder
+import lombok.Data
+import lombok.NoArgsConstructor
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
-@Entity(name = "event")
+@Builder // Gerar um Objeto com a classe
+@Data  // Fazer Get, Set e To String
+@Entity // Para dizer uma Entidade
+@AllArgsConstructor // Cria um construtor com todos os argumentos
+@NoArgsConstructor // Cria um construtor sem nenhum argumento
+@Table(name = "event")
 class Event {
 
     @Id
     @Column(name = "id")
-    var id = UUID.randomUUID().toString()
+    val id = UUID.randomUUID().toString()
 
     @Column(name = "date_event")
-    lateinit var dateEvent: LocalDateTime
+    lateinit var date_event: LocalDateTime
 
     @Column(name = "price")
     var price: Double = 0.0
@@ -29,16 +33,14 @@ class Event {
     @JoinColumn(name = "address_id")
     lateinit var address: Address
 
-    @OneToOne(cascade = [CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST])
-    @JoinColumn(name = "company_id")
-    lateinit var company: Company
+    constructor(date_event: LocalDateTime, price: Double, name: String, address: Address) {
 
-    constructor(dateEvent: LocalDateTime, price: Double, name: String, address: Address) {
-        this.dateEvent = dateEvent
+        this.date_event = date_event
         this.price = price
         this.name = name
         this.address = address
     }
 
     constructor()
+
 }
