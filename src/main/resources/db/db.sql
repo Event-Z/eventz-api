@@ -60,3 +60,14 @@ create table question (
     q varchar(255) not null,
     resp varchar(255) not null
 );
+
+create table session_token (
+	token varchar(32) primary key,
+    person_id varchar(36),
+    company_id varchar(36),
+    expired boolean default false not null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp,
+    foreign key (person_id) references person (id),
+    foreign key (company_id) references company (id)
+);
