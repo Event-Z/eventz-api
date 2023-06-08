@@ -17,6 +17,7 @@ class Person {
     @Id
     @Column(name = "id")
     val id = UUID.randomUUID().toString()
+
     @Column(name = "name")
     lateinit var name: String
     @Column(name = "cpf")
@@ -26,6 +27,7 @@ class Person {
     @OneToOne(cascade = [CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST])
     @JoinColumn(name = "address_id")
     lateinit var address: Address
+    
     constructor(name: String, cpf: String, password: String, address: Address) {
         this.name = name
         this.cpf = cpf

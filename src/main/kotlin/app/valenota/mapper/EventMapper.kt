@@ -3,6 +3,8 @@ package app.valenota.mapper
 import app.valenota.model.dto.EventDTO
 import app.valenota.model.entity.Address
 import app.valenota.model.entity.Event
+import app.valenota.model.form.AddressForm
+import app.valenota.model.form.CompanyForm
 import app.valenota.model.form.EventForm
 
 
@@ -14,14 +16,25 @@ class EventMapper {
             price = eventForm.price,
             name = eventForm.name,
 
-            address = Address(
+            address = AddressForm(
 
-                    street = eventForm.address.street,
-                    city = eventForm.address.city,
-                    district = eventForm.address.district,
-                    number = eventForm.address.number,
-                    cep = eventForm.address.cep
-            )
+                    street = eventForm.addressForm.street,
+                    city = eventForm.addressForm.city,
+                    district = eventForm.addressForm.district,
+                    number = eventForm.addressForm.number,
+                    cep = eventForm.addressForm.cep
+            ),
+
+            company = CompanyForm(
+
+                    name = eventForm.companyForm.name,
+                    cnpj = eventForm.companyForm.cnpj,
+                    password = eventForm.companyForm.password,
+                    address = eventForm.companyForm.address
+
+            ),
+
+
     )
 
     fun toEventDTO(event: Event) = EventDTO(
