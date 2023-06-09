@@ -1,22 +1,15 @@
 package app.valenota.model.entity
 
-
-import jakarta.persistence.*
-
-
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.OneToOne
-
 import java.util.UUID
 
 @Entity(name = "company")
 class Company {
-
-
     @Id
     @Column(name = "id")
     val id = UUID.randomUUID().toString()
@@ -35,7 +28,6 @@ class Company {
     lateinit var address: Address
 
     constructor(name: String, cnpj: String, password: String, address: Address) {
-
         this.name = name
         this.cnpj = cnpj
         this.password = password

@@ -6,4 +6,6 @@ import app.valenota.model.form.EventForm
 interface IEventService {
 
     fun create(eventForm: EventForm): EventDTO
+    fun update(id: String, eventForm: EventForm): EventDTO
+    fun list(id: String): List<EventDTO>
 }

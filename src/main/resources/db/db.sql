@@ -1,4 +1,4 @@
- create database valenotadb;
+create database valenotadb;
 
 create table address (
 	id varchar(36) primary key,
@@ -40,10 +40,9 @@ create table event (
     price double not null,
     name varchar(255) not null,
     company_id varchar(36) not null,
-    support_id varchar(36) not null,
+    support_id varchar(36),
     address_id varchar(36) not null,
     foreign key(company_id) references company (id),
-    foreign key(support_id) references support (id),
     foreign key(address_id) references address (id)
 );
 

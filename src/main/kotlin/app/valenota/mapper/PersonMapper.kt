@@ -4,13 +4,14 @@ import app.valenota.model.dto.PersonDTO
 import app.valenota.model.entity.Address
 import app.valenota.model.entity.Person
 import app.valenota.model.form.PersonForm
+import app.valenota.util.CryptographyUtil.Companion.encodeWithMD5
 
 class PersonMapper {
 
     fun toPerson(personForm: PersonForm) = Person(
         name = personForm.name,
         cpf = personForm.cpf,
-        password = personForm.password,
+        password = encodeWithMD5(personForm.password),
         address = Address(
             street = personForm.address.street,
             city = personForm.address.city,
