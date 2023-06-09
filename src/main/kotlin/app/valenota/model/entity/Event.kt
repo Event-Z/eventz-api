@@ -3,19 +3,10 @@ package app.valenota.model.entity
 import app.valenota.model.form.AddressForm
 import app.valenota.model.form.CompanyForm
 import jakarta.persistence.*
-import lombok.AllArgsConstructor
-import lombok.Builder
-import lombok.Data
-import lombok.NoArgsConstructor
 import java.time.LocalDateTime
 import java.util.*
 
-@Builder // Gerar um Objeto com a classe
-@Data  // Fazer Get, Set e To String
-@Entity // Para dizer uma Entidade
-@AllArgsConstructor // Cria um construtor com todos os argumentos
-@NoArgsConstructor // Cria um construtor sem nenhum argumento
-@Table(name = "event")
+@Entity(name = "event")
 class Event {
 
     @Id

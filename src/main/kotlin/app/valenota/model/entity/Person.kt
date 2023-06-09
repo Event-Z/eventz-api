@@ -1,27 +1,15 @@
 package app.valenota.model.entity
 
-<<<<<<< HEAD
-import jakarta.persistence.*
-import lombok.AllArgsConstructor
-import lombok.Builder
-import lombok.Data
-import lombok.NoArgsConstructor
-=======
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.OneToOne
->>>>>>> e8c626ed2a1bf57c2668729984f1fd0739da9439
+
 import java.util.UUID
 
-@Builder // Gerar um Objeto com a classe
-@Data  // Fazer Get, Set e To String
-@Entity // Para dizer uma Entidade
-@AllArgsConstructor // Cria um construtor com todos os argumentos
-@NoArgsConstructor // Cria um construtor sem nenhum argumento
-@Table(name = "person")
+@Entity (name = "person")
 class Person {
     @Id
     @Column(name = "id")
