@@ -10,8 +10,6 @@ import java.util.UUID
 
 @Entity(name = "company")
 class Company {
-
-
     @Id
     @Column(name = "id")
     val id = UUID.randomUUID().toString()
@@ -30,7 +28,6 @@ class Company {
     lateinit var address: Address
 
     constructor(name: String, cnpj: String, password: String, address: Address) {
-
         this.name = name
         this.cnpj = cnpj
         this.password = password

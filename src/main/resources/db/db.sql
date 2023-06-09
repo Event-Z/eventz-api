@@ -1,4 +1,4 @@
- create database valenotadb;
+create database valenotadb;
 
 create table address (
 	id varchar(36) primary key,

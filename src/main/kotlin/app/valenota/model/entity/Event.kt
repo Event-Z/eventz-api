@@ -1,20 +1,23 @@
 package app.valenota.model.entity
 
-import app.valenota.model.form.AddressForm
-import app.valenota.model.form.CompanyForm
-import jakarta.persistence.*
+import jakarta.persistence.Id
+import jakarta.persistence.Entity
+import jakarta.persistence.Column
+import jakarta.persistence.OneToOne
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.CascadeType
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 @Entity(name = "event")
 class Event {
 
     @Id
     @Column(name = "id")
-    val id = UUID.randomUUID().toString()
+    var id = UUID.randomUUID().toString()
 
     @Column(name = "date_event")
-    lateinit var date_event: LocalDateTime
+    lateinit var dateEvent: LocalDateTime
 
     @Column(name = "price")
     var price: Double = 0.0
@@ -30,15 +33,12 @@ class Event {
     @JoinColumn(name = "company_id")
     lateinit var company: Company
 
-    constructor(date_event: LocalDateTime, price: Double, name: String, address: Address, company: Company) {
-
-        this.date_event = date_event
+    constructor(dateEvent: LocalDateTime, price: Double, name: String, address: Address) {
+        this.dateEvent = dateEvent
         this.price = price
         this.name = name
         this.address = address
-        this.company = company
     }
 
     constructor()
-    constructor(date_event: LocalDateTime, price: Double, name: String, address: AddressForm, company: CompanyForm)
 }
