@@ -5,7 +5,7 @@ import app.valenota.util.CryptographyUtil.Companion.encodeWithMD5
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
 
-open class AppController(val sessionTokenRepository: ISessionTokenRepository) {
+open class AppController(private val sessionTokenRepository: ISessionTokenRepository) {
     protected fun formatErrors(bindingResult: BindingResult): ResponseEntity<Any> {
         val errors = ArrayList<String>()
         bindingResult.allErrors.forEach {
@@ -21,4 +21,9 @@ open class AppController(val sessionTokenRepository: ISessionTokenRepository) {
     } catch (e: Exception) {
         false
     }
+
+    protected fun get(sessionToken: String) =
+        sessionTokenRepository
+            .findByTokenAndExpired(encodeWithMD5(sessionToken), false)
+            .get()
 }
