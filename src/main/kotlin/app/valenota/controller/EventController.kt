@@ -50,10 +50,7 @@ class EventController(
     }
 
     @GetMapping("/list")
-    fun list(
-        @PathVariable id: String,
-        @RequestHeader sessionToken: String
-    ) = try {
+    fun list(@RequestHeader sessionToken: String) = try {
         if (verifyToken(sessionToken)) {
             ResponseEntity.ok(eventService.list(get(sessionToken).company!!.id))
         } else {

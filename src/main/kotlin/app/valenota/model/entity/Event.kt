@@ -29,7 +29,7 @@ class Event {
     @JoinColumn(name = "address_id")
     lateinit var address: Address
 
-    @OneToOne(cascade = [CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST])
+    @OneToOne(cascade = [])
     @JoinColumn(name = "company_id")
     lateinit var company: Company
 
