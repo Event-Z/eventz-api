@@ -8,5 +8,6 @@ import java.util.Optional
 @Repository
 interface ISessionTokenRepository: CrudRepository<SessionToken, String> {
     fun findByPersonIdAndExpired(personId: String, expired: Boolean): Optional<SessionToken>
+    fun findByCompanyIdAndExpired(companyId: String, expired: Boolean): Optional<SessionToken>
     fun findByTokenAndExpired(token: String, expired: Boolean): Optional<SessionToken>
 }

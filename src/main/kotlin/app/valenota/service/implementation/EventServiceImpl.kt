@@ -9,7 +9,7 @@ import app.valenota.repository.IEventRepository
 import app.valenota.service.ICompanyService
 import app.valenota.service.IEventService
 import org.springframework.stereotype.Service
-import java.lang.RuntimeException
+import kotlin.RuntimeException
 
 @Service
 class EventServiceImpl(
@@ -35,12 +35,20 @@ class EventServiceImpl(
             event.address = AddressMapper().toAddress(eventForm.address)
             return mapper.toEventDTO(eventRepository.save(event))
         }
-        throw RuntimeException()
+        throw RuntimeException("O evento não pertence à empresa (${eventForm.companyId})")
     }
 
     override fun list(id: String): List<EventDTO> {
         return eventRepository.findAll()
             .filter { it.company.id == id }
             .map { EventMapper().toEventDTO(it) }
+    }
+
+    override fun delete(id: String, companyId: String) {
+        val event = eventRepository.findById(id)
+        if (event.get().company.id == companyId)
+            eventRepository.deleteById(id)
+        else
+            throw RuntimeException("O evento não pertence à empresa ($companyId)")
     }
 }

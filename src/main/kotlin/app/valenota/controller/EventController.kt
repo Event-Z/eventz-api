@@ -5,6 +5,7 @@ import app.valenota.repository.ISessionTokenRepository
 import app.valenota.service.IEventService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -50,10 +51,25 @@ class EventController(
 
     @GetMapping("/list")
     fun list(
+        @PathVariable id: String,
         @RequestHeader sessionToken: String
     ) = try {
         if (verifyToken(sessionToken)) {
             ResponseEntity.ok(eventService.list(get(sessionToken).company!!.id))
+        } else {
+            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
+        }
+    } catch (error: Exception) {
+        ResponseEntity.badRequest()
+    }
+
+    @DeleteMapping("/{id}")
+    fun delete(
+        @PathVariable id: String,
+        @RequestHeader sessionToken: String
+    ) = try {
+        if (verifyToken(sessionToken)) {
+            ResponseEntity.ok(eventService.delete(id, get(sessionToken).company!!.id))
         } else {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
         }
