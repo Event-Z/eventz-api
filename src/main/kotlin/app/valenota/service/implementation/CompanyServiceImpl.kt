@@ -2,7 +2,6 @@ package app.valenota.service.implementation
 
 import app.valenota.exception.LoginException
 import app.valenota.mapper.CompanyMapper
-import app.valenota.mapper.PersonMapper
 import app.valenota.model.dto.CompanyDTO
 import app.valenota.model.dto.TokenDTO
 import app.valenota.model.entity.Company
@@ -44,7 +43,7 @@ class CompanyServiceImpl(
     }
 
     private fun configureSessionToken(company: Company): String {
-        val opSessionTokenActive = sessionTokenRepository.findByPersonIdAndExpired(company.id, false)
+        val opSessionTokenActive = sessionTokenRepository.findByCompanyIdAndExpired(company.id, false)
 
         if (opSessionTokenActive.isPresent) {
             val sessionTokenActive = opSessionTokenActive.get()
