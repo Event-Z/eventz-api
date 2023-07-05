@@ -41,8 +41,6 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-tasks.withType<Jar> {
-	manifest {
-		attributes["Main-Class"] = "app.valenota.ValenotaApplication"
-	}
+springBoot {
+	mainClass.set("app.valenota.ValenotaApplication")
 }
