@@ -8,7 +8,8 @@ class ValenotaApplication {
 	companion object {
 		@JvmStatic
 		fun main(args: Array<String>) {
-			runApplication<ValenotaApplication>(*args)
+			print("Teste caralhooo")
+			//runApplication<ValenotaApplication>(*args)
 		}
 	}
 }
