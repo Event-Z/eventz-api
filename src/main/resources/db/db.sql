@@ -9,6 +9,17 @@ create table address (
     cep varchar(10) not null
 );
 
+CREATE TABLE user (
+	id VARCHAR(36) PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL UNIQUE,
+	cnpj VARCHAR(14),
+	password VARCHAR(255) NOT NULL,
+	address_id VARCHAR(36) NOT NULL,
+	role ENUM("PERSON", "COMPANY") NOT NULL DEFAULT "PERSON",
+	FOREIGN KEY(address_id) references address (id)
+);
+
 create table person (
 	id varchar(36) primary key,
 	name varchar(255) not null,
