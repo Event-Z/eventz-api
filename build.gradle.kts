@@ -42,7 +42,8 @@ tasks.withType<Test> {
 }
 
 tasks.withType<Jar> {
+	// Otherwise you'll get a "No main manifest attribute" error
 	manifest {
-		attributes["Main-Class"] = "app.valenota.ValenotaApplication"
+		attributes["Main-Class"] = "app.valenota.ValenotaApplicationKt"
 	}
 }
