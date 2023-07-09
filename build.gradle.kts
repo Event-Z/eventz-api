@@ -41,14 +41,9 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-/*
-springBoot {
-	mainClass.set("app.valenota.ValenotaApplication")
-}*/
-
 tasks.withType<Jar> {
 	// Otherwise you'll get a "No main manifest attribute" error
 	manifest {
-		attributes["Main-Class"] = "app.valenota.ValenotaApplication"
+		attributes["Main-Class"] = "app.valenota.ValenotaApplicationKt"
 	}
 }
