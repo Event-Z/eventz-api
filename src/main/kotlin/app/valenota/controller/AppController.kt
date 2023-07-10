@@ -1,11 +1,11 @@
 package app.valenota.controller
 
-import app.valenota.repository.ISessionTokenRepository
+import app.valenota.service.ISessionTokenService
 import app.valenota.util.CryptographyUtil.Companion.encodeWithMD5
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
 
-open class AppController(private val sessionTokenRepository: ISessionTokenRepository) {
+open class AppController(private val sessionTokenService: ISessionTokenService) {
     protected fun formatErrors(bindingResult: BindingResult): ResponseEntity<Any> {
         val errors = ArrayList<String>()
         bindingResult.allErrors.forEach {
@@ -15,7 +15,7 @@ open class AppController(private val sessionTokenRepository: ISessionTokenReposi
     }
 
     protected fun verifyToken(sessionToken: String) = try {
-        sessionTokenRepository
+        sessionTokenService
             .findByTokenAndExpired(encodeWithMD5(sessionToken), false)
             .isPresent
     } catch (e: Exception) {
@@ -23,7 +23,7 @@ open class AppController(private val sessionTokenRepository: ISessionTokenReposi
     }
 
     protected fun get(sessionToken: String) =
-        sessionTokenRepository
+        sessionTokenService
             .findByTokenAndExpired(encodeWithMD5(sessionToken), false)
             .get()
 }

@@ -1,13 +1,13 @@
 package app.valenota.model.form
 
+import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Pattern
-import org.hibernate.validator.constraints.br.CPF
 
 data class LoginFormDTO(
-    @field:NotNull(message = "CPF não pode ser nulo!")
-    @field:CPF(message = "CPF inválido!")
-    val cpf: String,
+    @field:NotNull(message = "Email não pode ser nulo!")
+    @field:Email(message = "Email inválido!")
+    val email: String,
 
     @field:NotNull(message = "password não pode ser nulo!")
     @field:Pattern(
