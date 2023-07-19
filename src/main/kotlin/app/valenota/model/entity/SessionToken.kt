@@ -13,7 +13,7 @@ class SessionToken {
     @Column(name = "token")
     lateinit var token: String
     @ManyToOne
-    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     var user: User? = null
     @Column(name = "expired")
     var expired: Boolean = false

@@ -1,5 +1,8 @@
 package app.valenota.controller
 
+import app.valenota.exception.EventException
+import app.valenota.model.dto.ErrorDTO
+import app.valenota.model.feedback.Message.DEFAULT_ERROR
 import app.valenota.model.form.EventForm
 import app.valenota.service.IEventService
 import app.valenota.service.ISessionTokenService
@@ -30,7 +33,7 @@ class EventController(
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
         }
     } catch (error: Exception) {
-        ResponseEntity.badRequest()
+        ResponseEntity.internalServerError().body(ErrorDTO(DEFAULT_ERROR))
     }
 
     @PatchMapping("/{id}")
@@ -45,8 +48,10 @@ class EventController(
         } else {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
         }
+    } catch (error: EventException) {
+        ResponseEntity.status(error.code).body(ErrorDTO(error.message!!))
     } catch (error: Exception) {
-        ResponseEntity.badRequest()
+        ResponseEntity.internalServerError().body(ErrorDTO(DEFAULT_ERROR))
     }
 
     @GetMapping("/list")
@@ -57,7 +62,7 @@ class EventController(
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
         }
     } catch (error: Exception) {
-        ResponseEntity.badRequest()
+        ResponseEntity.internalServerError().body(ErrorDTO(DEFAULT_ERROR))
     }
 
     @DeleteMapping("/{id}")
@@ -70,7 +75,9 @@ class EventController(
         } else {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
         }
+    } catch (error: EventException) {
+        ResponseEntity.status(error.code).body(ErrorDTO(error.message!!))
     } catch (error: Exception) {
-        ResponseEntity.badRequest()
+        ResponseEntity.internalServerError().body(ErrorDTO(DEFAULT_ERROR))
     }
 }

@@ -1,12 +1,15 @@
 package app.valenota.service.implementation
 
 import app.valenota.exception.LoginException
+import app.valenota.exception.UserExistsException
 import app.valenota.mapper.UserMapper
+import app.valenota.model.dto.CompanyDTO
 import app.valenota.model.dto.PersonDTO
 import app.valenota.model.dto.TokenDTO
 import app.valenota.model.entity.User
 import app.valenota.model.entity.User.Role.COMPANY
 import app.valenota.model.entity.User.Role.PERSON
+import app.valenota.model.form.CompanyForm
 import app.valenota.model.form.LoginFormDTO
 import app.valenota.model.form.PersonForm
 import app.valenota.repository.IUserRepository
@@ -21,10 +24,24 @@ class UserService(
     private val sessionTokenService: ISessionTokenService
 ) : IUserService {
     override fun create(personForm: PersonForm): PersonDTO {
+        if (isExists(personForm.email)) {
+            throw UserExistsException()
+        }
         val mapper = UserMapper()
         val person = mapper.toPerson(personForm)
         return mapper.toPersonDTO(userRepository.save(person))
     }
+
+    override fun create(companyForm: CompanyForm): CompanyDTO {
+        if (isExists(companyForm.email)) {
+            throw UserExistsException()
+        }
+        val mapper = UserMapper()
+        val company = mapper.toCompany(companyForm)
+        return mapper.toCompanyDTO(userRepository.save(company))
+    }
+
+    private fun isExists(email: String) = userRepository.findByEmail(email).isPresent
 
     override fun login(loginFormDTO: LoginFormDTO): TokenDTO {
         val opUser = userRepository.findByEmailAndPassword(loginFormDTO.email,

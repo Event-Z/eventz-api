@@ -1,5 +1,6 @@
 package app.valenota.service.implementation
 
+import app.valenota.exception.EventException
 import app.valenota.mapper.AddressMapper
 import app.valenota.mapper.EventMapper
 import app.valenota.model.dto.EventDTO
@@ -34,7 +35,7 @@ class EventServiceImpl(
             event.address = AddressMapper().toAddress(eventForm.address)
             return mapper.toEventDTO(eventRepository.save(event))
         }
-        throw RuntimeException("O evento não pertence à empresa (${eventForm.owner})")
+        throw EventException()
     }
 
     override fun list(id: String): List<EventDTO> {
@@ -48,6 +49,6 @@ class EventServiceImpl(
         if (event.get().owner.id == companyId)
             eventRepository.deleteById(id)
         else
-            throw RuntimeException("O evento não pertence à empresa ($companyId)")
+            throw EventException()
     }
 }

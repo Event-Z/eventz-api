@@ -16,7 +16,7 @@ CREATE TABLE user (
 	cnpj VARCHAR(14),
 	password VARCHAR(255) NOT NULL,
 	address_id VARCHAR(36) NOT NULL,
-	role ENUM("PERSON", "COMPANY") NOT NULL DEFAULT "PERSON",
+	role tinyint(1) NOT NULL,
 	FOREIGN KEY(address_id) references address (id)
 );
 

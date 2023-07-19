@@ -1,11 +1,14 @@
 package app.valenota.model.entity
 
+import app.valenota.model.entity.User.Role.COMPANY
+import app.valenota.model.entity.User.Role.PERSON
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.OneToOne
+import org.springframework.beans.factory.annotation.Value
 
 import java.util.UUID
 
@@ -45,6 +48,7 @@ class User {
         this.cnpj = cnpj
         this.password = password
         this.address = address
+        this.role = COMPANY
     }
 
     constructor(name: String, email: String, password: String, address: Address) {
@@ -52,6 +56,7 @@ class User {
         this.email = email
         this.password = password
         this.address = address
+        this.role = PERSON
     }
 
     constructor()
