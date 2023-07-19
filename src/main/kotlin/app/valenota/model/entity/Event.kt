@@ -30,8 +30,8 @@ class Event {
     lateinit var address: Address
 
     @OneToOne(cascade = [])
-    @JoinColumn(name = "company_id")
-    lateinit var company: Company
+    @JoinColumn(name = "owner_id")
+    lateinit var owner: User
 
     constructor(dateEvent: LocalDateTime, price: Double, name: String, address: Address) {
         this.dateEvent = dateEvent

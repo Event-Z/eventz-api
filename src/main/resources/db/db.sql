@@ -9,22 +9,15 @@ create table address (
     cep varchar(10) not null
 );
 
-create table person (
-	id varchar(36) primary key,
-	name varchar(255) not null,
-    cpf varchar(11) unique not null,
-    password varchar(255) not null,
-    address_id varchar(36) not null,
-    foreign key(address_id) references address (id)
-);
-
-create table company (
-	id varchar(36) primary key,
-	name varchar(255) unique null,
-    cnpj varchar(14) unique null,
-    password varchar(255) not null,
-    address_id varchar(36) not null,
-    foreign key(address_id) references address (id)
+CREATE TABLE user (
+	id VARCHAR(36) PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL UNIQUE,
+	cnpj VARCHAR(14),
+	password VARCHAR(255) NOT NULL,
+	address_id VARCHAR(36) NOT NULL,
+	role tinyint(1) NOT NULL,
+	FOREIGN KEY(address_id) references address (id)
 );
 
 create table support (
@@ -39,19 +32,11 @@ create table event (
     date_event datetime not null,
     price double not null,
     name varchar(255) not null,
-    company_id varchar(36) not null,
     support_id varchar(36),
     address_id varchar(36) not null,
-    foreign key(company_id) references company (id),
-    foreign key(address_id) references address (id)
-);
-
-create table person_event (
-	id varchar(36) primary key,
-    person_id varchar(36) not null,
-    event_id varchar(36) not null,
-	foreign key(person_id) references person (id),
-    foreign key(event_id) references event (id)
+    owner_id varchar(36) not null,
+    foreign key(address_id) references address (id),
+    foreign key(owner_id) references user(id)
 );
 
 create table question (
@@ -62,11 +47,9 @@ create table question (
 
 create table session_token (
 	token varchar(32) primary key,
-    person_id varchar(36),
-    company_id varchar(36),
+    user_id varchar(36),
     expired boolean default false not null,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp,
-    foreign key (person_id) references person (id),
-    foreign key (company_id) references company (id)
+    foreign key (user_id) references user (id)
 );

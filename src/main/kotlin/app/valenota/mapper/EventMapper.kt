@@ -2,7 +2,6 @@ package app.valenota.mapper
 
 import app.valenota.model.dto.CompanyDTO
 import app.valenota.model.dto.EventDTO
-import app.valenota.model.entity.Address
 import app.valenota.model.entity.Event
 import app.valenota.model.form.EventForm
 
@@ -21,9 +20,10 @@ class EventMapper {
             name = event.name,
             address = AddressMapper().toAddressDTO(event.address),
             company = CompanyDTO(
-                id = event.company.id,
-                name = event.company.name,
-                cnpj = event.company.cnpj
+                id = event.owner.id,
+                name = event.owner.name,
+                email = event.owner.email,
+                cnpj = event.owner.cnpj!!
             )
     )
 }

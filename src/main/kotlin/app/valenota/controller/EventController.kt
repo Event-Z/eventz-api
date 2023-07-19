@@ -1,8 +1,11 @@
 package app.valenota.controller
 
+import app.valenota.exception.EventException
+import app.valenota.model.dto.ErrorDTO
+import app.valenota.model.feedback.Message.DEFAULT_ERROR
 import app.valenota.model.form.EventForm
-import app.valenota.repository.ISessionTokenRepository
 import app.valenota.service.IEventService
+import app.valenota.service.ISessionTokenService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -18,19 +21,19 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/event")
 class EventController(
-    val eventService: IEventService,
-    sessionTokenRepository: ISessionTokenRepository
-): AppController(sessionTokenRepository) {
+    private val eventService: IEventService,
+    sessionTokenService: ISessionTokenService
+): AppController(sessionTokenService) {
     @PostMapping
     fun create(@RequestBody eventForm: EventForm, @RequestHeader sessionToken: String) = try {
         if (verifyToken(sessionToken)) {
-            eventForm.companyId = get(sessionToken).company!!.id
+            eventForm.owner = get(sessionToken).user!!.id
             ResponseEntity.ok(eventService.create(eventForm))
         } else {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
         }
     } catch (error: Exception) {
-        ResponseEntity.badRequest()
+        ResponseEntity.internalServerError().body(ErrorDTO(DEFAULT_ERROR))
     }
 
     @PatchMapping("/{id}")
@@ -40,24 +43,26 @@ class EventController(
         @RequestHeader sessionToken: String
     ) = try {
         if (verifyToken(sessionToken)) {
-            eventForm.companyId = get(sessionToken).company!!.id
+            eventForm.owner = get(sessionToken).user!!.id
             ResponseEntity.ok(eventService.update(id, eventForm))
         } else {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
         }
+    } catch (error: EventException) {
+        ResponseEntity.status(error.code).body(ErrorDTO(error.message!!))
     } catch (error: Exception) {
-        ResponseEntity.badRequest()
+        ResponseEntity.internalServerError().body(ErrorDTO(DEFAULT_ERROR))
     }
 
     @GetMapping("/list")
     fun list(@RequestHeader sessionToken: String) = try {
         if (verifyToken(sessionToken)) {
-            ResponseEntity.ok(eventService.list(get(sessionToken).company!!.id))
+            ResponseEntity.ok(eventService.list(get(sessionToken).user!!.id))
         } else {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
         }
     } catch (error: Exception) {
-        ResponseEntity.badRequest()
+        ResponseEntity.internalServerError().body(ErrorDTO(DEFAULT_ERROR))
     }
 
     @DeleteMapping("/{id}")
@@ -66,11 +71,13 @@ class EventController(
         @RequestHeader sessionToken: String
     ) = try {
         if (verifyToken(sessionToken)) {
-            ResponseEntity.ok(eventService.delete(id, get(sessionToken).company!!.id))
+            ResponseEntity.ok(eventService.delete(id, get(sessionToken).user!!.id))
         } else {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
         }
+    } catch (error: EventException) {
+        ResponseEntity.status(error.code).body(ErrorDTO(error.message!!))
     } catch (error: Exception) {
-        ResponseEntity.badRequest()
+        ResponseEntity.internalServerError().body(ErrorDTO(DEFAULT_ERROR))
     }
 }
