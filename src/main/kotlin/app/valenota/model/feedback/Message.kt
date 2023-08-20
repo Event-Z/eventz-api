@@ -12,4 +12,13 @@ object Message {
 
     val INCORRECT_CREDENTIALS: String
         get() = "Crendenciais de acesso incorretas!"
+
+    val USER_NOT_FOUND: String
+        get() = "Usuário não encontrado!"
+
+    val GENERIC_ERROR: String
+        get() = "Erro interno inesperado!"
+
+    val INVALID_FOLLOWED: String
+        get() = "O usuário informado para ser seguido é inválido!"
 }

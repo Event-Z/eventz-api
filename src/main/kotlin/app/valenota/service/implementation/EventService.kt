@@ -9,10 +9,9 @@ import app.valenota.repository.IEventRepository
 import app.valenota.service.IUserService
 import app.valenota.service.IEventService
 import org.springframework.stereotype.Service
-import kotlin.RuntimeException
 
 @Service
-class EventServiceImpl(
+class EventService(
     private val eventRepository: IEventRepository,
     private val userService: IUserService
 ) : IEventService {

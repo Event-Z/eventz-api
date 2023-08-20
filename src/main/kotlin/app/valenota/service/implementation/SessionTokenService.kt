@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class SessionTokenServiceImpl(
+class SessionTokenService(
     private val sessionTokenRepository: ISessionTokenRepository
 ) : ISessionTokenService {
     override fun findByUserIdAndExpired(userId: String, expired: Boolean): Optional<SessionToken> =
