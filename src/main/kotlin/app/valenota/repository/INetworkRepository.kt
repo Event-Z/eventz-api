@@ -7,4 +7,5 @@ import org.springframework.data.repository.CrudRepository
 
 interface INetworkRepository: CrudRepository<Network, String> {
     fun findByFollowerAndFollowed(follower: User, followed: User): Optional<Network>
+    fun findAllByFollowed(followed: User): List<Network>
 }

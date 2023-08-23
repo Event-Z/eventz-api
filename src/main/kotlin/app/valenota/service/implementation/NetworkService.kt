@@ -1,6 +1,8 @@
 package app.valenota.service.implementation
 
 import app.valenota.exception.InvalidFollowedException
+import app.valenota.model.dto.FollowerListDTO
+import app.valenota.model.dto.FollowerDTO
 import app.valenota.model.entity.Network
 import app.valenota.model.entity.User
 import app.valenota.model.form.NetworkForm
@@ -29,4 +31,11 @@ class NetworkService(
             networkRepository.save(network)
         }
     }
+
+    override fun listFollowers(followed: User): FollowerListDTO =
+        FollowerListDTO(
+            networkRepository.findAllByFollowed(followed).map {
+                FollowerDTO(it.follower.id, it.follower.name)
+            }
+        )
 }

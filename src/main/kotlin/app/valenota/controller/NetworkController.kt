@@ -9,6 +9,11 @@ import app.valenota.service.ISessionTokenService
 import app.valenota.service.INetworkService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.http.ResponseEntity.badRequest
+import org.springframework.http.ResponseEntity.internalServerError
+import org.springframework.http.ResponseEntity.noContent
+import org.springframework.http.ResponseEntity.status
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
@@ -25,17 +30,28 @@ class NetworkController (
     fun follow(
         @RequestBody networkForm: NetworkForm,
         @RequestHeader sessionToken: String
-    ): ResponseEntity<Any> = try {
+    ) = try {
         if (!verifyToken(sessionToken)) {
-            ResponseEntity.status(HttpStatus.UNAUTHORIZED).build<Any>()
+            status(HttpStatus.UNAUTHORIZED).build<Any>()
         }
         networkService.follow(networkForm, get(sessionToken).user!!)
-        ResponseEntity.noContent().build()
+        noContent().build()
     } catch (e: UserNotFoundException) {
-        ResponseEntity.status(e.code).body(ErrorDTO(e.message!!))
+        status(e.code).body(ErrorDTO(e.message!!))
     } catch (e: InvalidFollowedException) {
-        ResponseEntity.badRequest().body(ErrorDTO(e.message!!))
+        badRequest().body(ErrorDTO(e.message!!))
     } catch (e: Exception) {
-        ResponseEntity.internalServerError().body(ErrorDTO(GENERIC_ERROR))
+        internalServerError().body(ErrorDTO(GENERIC_ERROR))
+    }
+
+    @GetMapping("/followers")
+    fun listFollowers(@RequestHeader sessionToken: String) = try {
+        if (!verifyToken(sessionToken)) {
+            status(HttpStatus.UNAUTHORIZED).build<Any>()
+        }
+        networkService.listFollowers(get(sessionToken).user!!)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        internalServerError().body(ErrorDTO(GENERIC_ERROR))
     }
 }
