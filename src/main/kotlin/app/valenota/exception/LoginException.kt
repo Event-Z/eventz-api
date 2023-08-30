@@ -1,7 +1,8 @@
 package app.valenota.exception
 
 import app.valenota.model.feedback.Message.INCORRECT_CREDENTIALS
+import org.springframework.http.HttpStatus
 
-class LoginException: RuntimeException(INCORRECT_CREDENTIALS) {
-    val code = 401
-}
+class LoginException(
+    val code: HttpStatus = HttpStatus.UNAUTHORIZED
+): RuntimeException(INCORRECT_CREDENTIALS)

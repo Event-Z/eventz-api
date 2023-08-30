@@ -1,7 +1,7 @@
 package app.valenota.service.implementation
 
-import app.valenota.service.IPersonService
+import app.valenota.service.ICompanyService
 import org.springframework.stereotype.Service
 
 @Service
-class PersonServiceImpl() : IPersonService
+class CompanyService() : ICompanyService

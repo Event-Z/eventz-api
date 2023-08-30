@@ -53,3 +53,11 @@ create table session_token (
     updated_at timestamp default current_timestamp,
     foreign key (user_id) references user (id)
 );
+
+create table network (
+	id varchar(36) primary key,
+	follower varchar(36) not null,
+	followed varchar(36) not null,
+	foreign key (follower) references user (id),
+	foreign key (followed) references user (id)
+);

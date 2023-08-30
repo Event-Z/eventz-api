@@ -2,6 +2,7 @@ package app.valenota.service.implementation
 
 import app.valenota.exception.LoginException
 import app.valenota.exception.UserExistsException
+import app.valenota.exception.UserNotFoundException
 import app.valenota.mapper.UserMapper
 import app.valenota.model.dto.CompanyDTO
 import app.valenota.model.dto.PersonDTO
@@ -62,6 +63,10 @@ class UserService(
     }
 
     override fun findById(id: String): User {
-        return userRepository.findById(id).get()
+        val userOp = userRepository.findById(id)
+        if (userOp.isPresent) {
+            return userOp.get()
+        }
+        throw UserNotFoundException()
     }
 }
